@@ -6,7 +6,7 @@ function FoodList({ products }) {
   }
 
   return (
-    <div>
+    <div className = "food-list">
       {products.map((product, index) => (
         <FoodCard key={index} product={product} />
       ))}

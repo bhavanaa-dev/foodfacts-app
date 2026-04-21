@@ -1,38 +1,27 @@
-import { useState } from "react";
-import SearchBar from "./components/SearchBar";
-import FoodList from "./components/FoodList";
+import { Routes, Route, Link } from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import DetailsPage from "./pages/DetailsPage";
+import SavedPage from "./pages/SavedPage";
 
 function App() {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(false);
-
-  const handleSearch = async (query) => {
-    try {
-      setLoading(true);
-
-      const response = await fetch(
-        `https://world.openfoodfacts.org/cgi/search.pl?search_terms=${query}&search_simple=1&action=process&json=1`
-      );
-
-      const data = await response.json();
-
-      setProducts(data.products || []);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return (
     <div>
-      <h1>FoodFacts 🍔</h1>
+      <h1 style={{ textAlign: "center" }}>FoodFacts 🍔</h1>
 
-      <SearchBar onSearch={handleSearch} />
+      {/* Navigation */}
+      <div style={{ textAlign: "center", marginBottom: "15px" }}>
+        <Link to="/" style={{ marginRight: "10px" }}>
+          Home
+        </Link>
+        <Link to="/saved">Saved ❤️</Link>
+      </div>
 
-      {loading && <p style={{ textAlign: "center" }}>Loading...</p>}
-
-      <FoodList products={products} />
+      {/* Routes */}
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/product/:code" element={<DetailsPage />} />
+        <Route path="/saved" element={<SavedPage />} />
+      </Routes>
     </div>
   );
 }
