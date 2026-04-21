@@ -1,8 +1,11 @@
+import { useNavigate } from "react-router-dom";
 function FoodCard({ product }) {
+    const navigate = useNavigate();
   if (!product) return null;
 
   return (
-    <div className = "food-card">
+    <div className = "food-card" onClick={() => navigate(`/product/${product.code}`)}
+  style={{ cursor: "pointer" }}>
       <h2>{product.product_name || "No Name"}</h2>
       <p>{product.brands || "Unknown Brand"}</p>
 
